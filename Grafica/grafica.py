@@ -2,9 +2,11 @@ import pygame, os, sys
 class opciones:
     espaciado = 10
     anchoBarra = 50
-    tamanyoEscalaX = 700
-    tamanyoEscalaY = 500
-    intervalo = 200
+    intervalo = 100
+    anchoVentana = 1000
+    altoVentana = 800
+    tamanyoEscalaX = anchoVentana-100
+    tamanyoEscalaY = altoVentana-100
 
 class Colores:
     azulClarito = (9, 165, 171)
@@ -20,10 +22,12 @@ class Grafica:
     def __init__(self, screen, valores):
         self.screen = screen
         self.x = len(valores)
-        self.miEscala = Escala(screen, 50, 550)
+
         self.valores = valores
 
         valorMaximo = self.calcValorMax()
+        numIntervalos = int(valorMaximo/opciones.intervalo)
+        self.miEscala = Escala(screen, 50, opciones.altoVentana-50, numIntervalos)
 
         for i in range(self.x):
             alto = self.calcularAlturaBarra(opciones.tamanyoEscalaY, valorMaximo, self.valores[i])
@@ -67,36 +71,34 @@ class Barra:
 
 class Escala:
     color = Colores.rojo
-    def __init__(self,screen, x, y):
+    def __init__(self,screen, x, y, numIntervalos):
         self.x = x
         self.y = y
         self.screen = screen
+        self.numIntervalos = numIntervalos
 
     def pintar(self):
         pygame.draw.line(self.screen, self.color, (self.x, self.y), (self.x, self.y-opciones.tamanyoEscalaY), 3)
         pygame.draw.line(self.screen, self.color, (self.x, self.y), (self.x+opciones.tamanyoEscalaX, self.y), 3)
-
-
-
+        for i in range(self.numIntervalos + 1):
+            pygame.draw.line(self.screen, self.color, (self.x - 5, self.y - opciones.intervalo*i), (self.x + 5, self.y - opciones.intervalo*i), 3)
 
 def main():
     pygame.init()
 
-    size = 800, 600
+    size = opciones.anchoVentana, opciones.altoVentana
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption('Gráfica de barras')
     # pygame.mouse.set_visible(0)
 
 
-    miGrafica = Grafica(screen, (100, 150, 75, 125, 20, 400))
+    miGrafica = Grafica(screen, (100, 150, 75, 125, 20, 400, 1200))
 
     while 1:
         pygame.display.update()
         pygame.display.get_surface().fill(Colores.negro)
 
         miGrafica.pintar()
-
-
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
