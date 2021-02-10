@@ -1,5 +1,4 @@
 import pygame, os, sys
-from pygame.locals import *
 class opciones:
     espaciado = 10
     anchoBarra = 50
@@ -15,15 +14,20 @@ class Grafica:
 
         for i in range(self.x):
             posX = self.miEscala.x+opciones.espaciado+i*(opciones.espaciado+opciones.anchoBarra)
-            posY = self.miEscala.y-self.valores[i]
-            alto = self.valores[i]
+            posY = self.miEscala.y-(self.valores[i]/self.calcValorMax()*500)
+            alto = 500 * (self.valores[i]/self.calcValorMax())
             anchor = opciones.anchoBarra
 
-            miBarra = Barra(screen,posX, posY,alto,anchor)
+            miBarra = Barra(screen, posX, posY, alto, anchor)
 
             self.conjuntoBarras.append(miBarra)
 
-
+    def calcValorMax(self):
+        maximo = 0
+        for i in self.valores:
+            if i > maximo:
+                maximo = i
+        return maximo
 
     def pintar(self):
         for c in self.conjuntoBarras:
@@ -33,7 +37,7 @@ class Grafica:
 
 class Barra:
 
-    color = (9,165, 171)
+    color = (9, 165, 171)
 
     def __init__(self, screen, x, y, valor, ancho):
         self.screen = screen
@@ -47,7 +51,6 @@ class Barra:
 
 class Escala:
     color = (255, 0, 0)
-
     def __init__(self,screen, x, y):
         self.x = x
         self.y = y
@@ -69,7 +72,7 @@ def main():
     pygame.mouse.set_visible(0)
 
 
-    miGrafica = Grafica(screen, (100, 150, 75, 450, 125, 500))
+    miGrafica = Grafica(screen, (100, 150, 75, 800, 125, 250))
 
     while 1:
         pygame.display.update()
