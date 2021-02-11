@@ -12,11 +12,11 @@ class opciones:
 
 class Colores:
     azulClarito = (9, 165, 171)
-    rojo = (255,0,0)
-    verde = (0,255,0)
-    azul = (0,0,255)
-    blanco = (255,255,255)
-    negro = (0,0,0)
+    rojo = (255, 0, 0)
+    verde = (0, 255, 0)
+    azul = (0, 0, 255)
+    blanco = (255, 255, 255)
+    negro = (0, 0, 0)
 
 class Posicion:
     def __init__(self, x, y):
@@ -87,15 +87,20 @@ class Escala:
         self.valorIntervalo = valorMaximo/self.numIntervalos
 
     def pintar(self):
-        pygame.draw.line(self.screen, self.color, (self.posicion.x, self.posicion.y), (self.posicion.x, self.posicion.y-opciones.tamanyoEscalaY), self.grosor)
-        pygame.draw.line(self.screen, self.color, (self.posicion.x, self.posicion.y), (self.posicion.x+opciones.tamanyoEscalaX, self.posicion.y), self.grosor)
+        pygame.draw.line(self.screen, self.color, (self.posicion.x, self.posicion.y),
+                         (self.posicion.x, self.posicion.y-opciones.tamanyoEscalaY), self.grosor)
+        pygame.draw.line(self.screen, self.color, (self.posicion.x, self.posicion.y),
+                         (self.posicion.x+opciones.tamanyoEscalaX, self.posicion.y), self.grosor)
         for i in range(self.numIntervalos + 1):
             pygame.draw.line(self.screen, self.color, (self.posicion.x - 5, self.posicion.y - opciones.intervalo*i),
                              (self.posicion.x + 5, self.posicion.y - opciones.intervalo*i), self.grosor)
-
+            myfont = pygame.font.SysFont('Comic Sans MS', 10)
+            textsurface = myfont.render(str(int(i*self.valorIntervalo)), False, Colores.verde)
+            self.screen.blit(textsurface, (35, self.posicion.y - opciones.intervalo*i - 5))
 
 def main():
     pygame.init()
+    pygame.font.init()
 
     size = opciones.anchoVentana, opciones.altoVentana
     screen = pygame.display.set_mode(size)
