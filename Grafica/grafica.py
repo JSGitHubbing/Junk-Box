@@ -3,10 +3,12 @@ class opciones:
     espaciado = 10
     anchoBarra = 50
     intervalo = 100
-    anchoVentana = 1000
-    altoVentana = 800
-    tamanyoEscalaX = anchoVentana-100
-    tamanyoEscalaY = altoVentana-100
+    anchoVentana = 800
+    altoVentana = 600
+    margenX = 100
+    margenY = 100
+    tamanyoEscalaX = anchoVentana-margenX
+    tamanyoEscalaY = altoVentana-margenY
 
 class Colores:
     azulClarito = (9, 165, 171)
@@ -16,23 +18,28 @@ class Colores:
     blanco = (255,255,255)
     negro = (0,0,0)
 
+class Posicion:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
 class Grafica:
     conjuntoBarras = []
 
-    def __init__(self, screen, valores):
+    def __init__(self, screen, valores, posicion):
         self.screen = screen
         self.x = len(valores)
 
         self.valores = valores
+        self.posicion = posicion
 
         valorMaximo = self.calcValorMax()
-        numIntervalos = int(valorMaximo/opciones.intervalo)
-        self.miEscala = Escala(screen, 50, opciones.altoVentana-50, numIntervalos)
+        self.miEscala = Escala(screen, posicion, valorMaximo)
 
         for i in range(self.x):
             alto = self.calcularAlturaBarra(opciones.tamanyoEscalaY, valorMaximo, self.valores[i])
-            posX = self.miEscala.x + opciones.espaciado + i * (opciones.espaciado + opciones.anchoBarra)
-            posY = self.miEscala.y - alto
+            posX = self.posicion.x + opciones.espaciado + i * (opciones.espaciado + opciones.anchoBarra)
+            posY = self.posicion.y - alto
             anchor = opciones.anchoBarra
 
             miBarra = Barra(screen, posX, posY, alto, anchor)
@@ -71,17 +78,21 @@ class Barra:
 
 class Escala:
     color = Colores.rojo
-    def __init__(self,screen, x, y, numIntervalos):
-        self.x = x
-        self.y = y
+    grosor = 3
+    def __init__(self,screen, posicion, valorMaximo):
+        self.posicion = posicion
         self.screen = screen
-        self.numIntervalos = numIntervalos
+        self.valorMaximo = valorMaximo
+        self.numIntervalos = int(valorMaximo/opciones.intervalo)
+        self.valorIntervalo = valorMaximo/self.numIntervalos
 
     def pintar(self):
-        pygame.draw.line(self.screen, self.color, (self.x, self.y), (self.x, self.y-opciones.tamanyoEscalaY), 3)
-        pygame.draw.line(self.screen, self.color, (self.x, self.y), (self.x+opciones.tamanyoEscalaX, self.y), 3)
+        pygame.draw.line(self.screen, self.color, (self.posicion.x, self.posicion.y), (self.posicion.x, self.posicion.y-opciones.tamanyoEscalaY), self.grosor)
+        pygame.draw.line(self.screen, self.color, (self.posicion.x, self.posicion.y), (self.posicion.x+opciones.tamanyoEscalaX, self.posicion.y), self.grosor)
         for i in range(self.numIntervalos + 1):
-            pygame.draw.line(self.screen, self.color, (self.x - 5, self.y - opciones.intervalo*i), (self.x + 5, self.y - opciones.intervalo*i), 3)
+            pygame.draw.line(self.screen, self.color, (self.posicion.x - 5, self.posicion.y - opciones.intervalo*i),
+                             (self.posicion.x + 5, self.posicion.y - opciones.intervalo*i), self.grosor)
+
 
 def main():
     pygame.init()
@@ -91,8 +102,8 @@ def main():
     pygame.display.set_caption('Gráfica de barras')
     # pygame.mouse.set_visible(0)
 
-
-    miGrafica = Grafica(screen, (100, 150, 75, 125, 20, 400, 1200))
+    posicion = Posicion(75, opciones.altoVentana - 50)
+    miGrafica = Grafica(screen, (100, 150, 75, 125, 20, 400, 1200), posicion)
 
     while 1:
         pygame.display.update()
@@ -107,3 +118,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+    #Añadir texto a la gráfica
+    #Gestionar el ancho de barra según su cantidad
