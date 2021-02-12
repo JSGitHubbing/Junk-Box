@@ -1,8 +1,9 @@
-import pygame, os, sys
+import pygame, os
+from Cuentapalabras import CuentapalabrasLector
 class opciones:
     espaciado = 10
     anchoBarra = 50
-    intervalo = 100
+    intervalo = 500
     anchoVentana = 800
     altoVentana = 600
     margenX = 100
@@ -35,16 +36,23 @@ class Grafica:
 
         valorMaximo = self.calcValorMax()
         self.miEscala = Escala(screen, posicion, valorMaximo)
+        if self.x < 12:
+            for i in range(self.x):
+                alto = self.calcularAlturaBarra(opciones.tamanyoEscalaY, valorMaximo, self.valores[i])
+                posX = self.posicion.x + opciones.espaciado + i * (opciones.espaciado + opciones.anchoBarra)
+                posY = self.posicion.y - alto
+                anchor = opciones.anchoBarra
+                miBarra = Barra(screen, posX, posY, alto, anchor)
+                self.conjuntoBarras.append(miBarra)
 
-        for i in range(self.x):
-            alto = self.calcularAlturaBarra(opciones.tamanyoEscalaY, valorMaximo, self.valores[i])
-            posX = self.posicion.x + opciones.espaciado + i * (opciones.espaciado + opciones.anchoBarra)
-            posY = self.posicion.y - alto
-            anchor = opciones.anchoBarra
-
-            miBarra = Barra(screen, posX, posY, alto, anchor)
-
-            self.conjuntoBarras.append(miBarra)
+        else:
+            for i in range(self.x):
+                alto = self.calcularAlturaBarra(opciones.tamanyoEscalaY, valorMaximo, self.valores[i])
+                posX = self.posicion.x + i * opciones.tamanyoEscalaX/self.x
+                posY = self.posicion.y - alto
+                anchor = opciones.tamanyoEscalaX/self.x
+                miBarra = Barra(screen, posX, posY, alto, anchor)
+                self.conjuntoBarras.append(miBarra)
 
     def calcValorMax(self):
         maximo = 0
@@ -65,6 +73,7 @@ class Grafica:
 class Barra:
 
     color = Colores.azulClarito
+    grosor = 2
 
     def __init__(self, screen, x, y, valor, ancho):
         self.screen = screen
@@ -74,7 +83,7 @@ class Barra:
         self.ancho = ancho
 
     def pintar(self):
-        pygame.draw.rect(self.screen, self.color, pygame.Rect(self.x, self.y, self.ancho, self.z), 2)
+        pygame.draw.rect(self.screen, self.color, pygame.Rect(self.x+3, self.y, self.ancho, self.z), self.grosor)
 
 class Escala:
     color = Colores.rojo
@@ -91,12 +100,15 @@ class Escala:
                          (self.posicion.x, self.posicion.y-opciones.tamanyoEscalaY), self.grosor)
         pygame.draw.line(self.screen, self.color, (self.posicion.x, self.posicion.y),
                          (self.posicion.x+opciones.tamanyoEscalaX, self.posicion.y), self.grosor)
+
+        distanciaEntreIntervalos = opciones.tamanyoEscalaY/self.numIntervalos
+
         for i in range(self.numIntervalos + 1):
-            pygame.draw.line(self.screen, self.color, (self.posicion.x - 5, self.posicion.y - opciones.intervalo*i),
-                             (self.posicion.x + 5, self.posicion.y - opciones.intervalo*i), self.grosor)
+            pygame.draw.line(self.screen, self.color, (self.posicion.x - 5, self.posicion.y - distanciaEntreIntervalos*i),
+                             (self.posicion.x + 5, self.posicion.y - distanciaEntreIntervalos*i), self.grosor)
             myfont = pygame.font.SysFont('Comic Sans MS', 10)
             textsurface = myfont.render(str(int(i*self.valorIntervalo)), False, Colores.verde)
-            self.screen.blit(textsurface, (35, self.posicion.y - opciones.intervalo*i - 5))
+            self.screen.blit(textsurface, (35, self.posicion.y - distanciaEntreIntervalos*i - 5))
 
 def main():
     pygame.init()
@@ -108,7 +120,12 @@ def main():
     # pygame.mouse.set_visible(0)
 
     posicion = Posicion(75, opciones.altoVentana - 50)
-    miGrafica = Grafica(screen, (100, 150, 75, 125, 20, 400, 1200), posicion)
+
+    valores = CuentapalabrasLector.crearListas('el_quijoteBis.csv')
+    valores = CuentapalabrasLector.filtrarPorValor(valores, 20)
+    valores = CuentapalabrasLector.limitarA(valores, 40)
+
+    miGrafica = Grafica(screen, valores, posicion)
 
     while 1:
         pygame.display.update()
@@ -123,6 +140,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-    #Añadir texto a la gráfica
-    #Gestionar el ancho de barra según su cantidad
