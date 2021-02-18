@@ -35,6 +35,10 @@ def main():
                 miControlador.subirVolumen()
             if pygame.key.get_pressed()[pygame.K_a]:
                 miControlador.bajarVolumen()
+            if pygame.key.get_pressed()[pygame.K_w]:
+                miControlador.flechaArriba()
+            if pygame.key.get_pressed()[pygame.K_s]:
+                miControlador.flechaAbajo()
 
             if event.type == pygame.QUIT:
                 pygame.quit()

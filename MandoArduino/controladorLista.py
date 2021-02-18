@@ -9,9 +9,13 @@ class ControladorLista(Controlador):
 
     def subirVolumen(self):
         self.indiceArchivo = 0 if self.indiceArchivo -1 < 0 else self.indiceArchivo -1
-
     def bajarVolumen(self):
         self.indiceArchivo = len(self.listaArchivos) - 1 if self.indiceArchivo >= len(self.listaArchivos) - 1 else self.indiceArchivo +1
+    def flechaArriba(self):
+        self.indiceArchivo = 0 if self.indiceArchivo -1 < 0 else self.indiceArchivo -3
+    def flechaAbajo(self):
+        self.indiceArchivo = len(self.listaArchivos) - 1 if self.indiceArchivo >= len(self.listaArchivos) - 1 else self.indiceArchivo +3
+
 
     def rebobinar(self):
         self.ruta = rutaPadre(self.ruta)
