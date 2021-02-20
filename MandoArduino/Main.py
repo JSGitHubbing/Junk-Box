@@ -4,7 +4,24 @@ from interfazPrograma import *
 miRuta = '/home/platonium/Vídeos'
 #Tamaño de la ventana
 ancho = 1000
-alto = 800
+alto = 770
+
+
+def comprobarTeclas(miControlador):
+    if pygame.key.get_pressed()[pygame.K_z]:
+        miControlador.rebobinar()
+    if pygame.key.get_pressed()[pygame.K_x]:
+        miControlador.avanzar()
+
+    if pygame.key.get_pressed()[pygame.K_q]:
+        miControlador.subirVolumen()
+    if pygame.key.get_pressed()[pygame.K_a]:
+        miControlador.bajarVolumen()
+
+    if pygame.key.get_pressed()[pygame.K_w]:
+        miControlador.flechaArriba()
+    if pygame.key.get_pressed()[pygame.K_s]:
+        miControlador.flechaAbajo()
 
 def main():
     pygame.init()
@@ -16,30 +33,15 @@ def main():
 
     miControlador = InterfazPrograma(miRuta)
 
-
     while 1:
         pygame.display.update()
         pygame.display.get_surface().fill((0, 0, 0))
 
-
         miControlador.pintar(screen)
 
-
-
-
         for event in pygame.event.get():
-            if pygame.key.get_pressed()[pygame.K_z]:
-                miControlador.rebobinar()
-
-            if pygame.key.get_pressed()[pygame.K_q]:
-                miControlador.subirVolumen()
-            if pygame.key.get_pressed()[pygame.K_a]:
-                miControlador.bajarVolumen()
-            if pygame.key.get_pressed()[pygame.K_w]:
-                miControlador.flechaArriba()
-            if pygame.key.get_pressed()[pygame.K_s]:
-                miControlador.flechaAbajo()
-
+            if event.type == pygame.KEYDOWN:
+                comprobarTeclas(miControlador)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 return
