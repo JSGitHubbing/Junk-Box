@@ -1,4 +1,5 @@
 from interfazPrograma import *
+from cuadroAyuda import *
 
 
 miRuta = '/home/platonium/Vídeos'
