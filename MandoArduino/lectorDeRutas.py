@@ -27,12 +27,6 @@ def archivosEnRuta(ruta):
 def rutaPadre(ruta):
     return Path(ruta).parent
 
-def rutaDeArchivo(rutaPadre, nombreArchivo):
-    if type(rutaPadre) != Path:
-        rutaPadre = Path(rutaPadre)
-        
-    return rutaPadre.joinpath(nombreArchivo)
-
 def calcularIndiceArchivo(rutaArchivo):
     listaArchivos = archivosEnRuta(rutaPadre(rutaArchivo))
     return listaArchivos.index(rutaArchivo)

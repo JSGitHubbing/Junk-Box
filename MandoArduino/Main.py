@@ -1,3 +1,4 @@
+from MandoArduino import notificaciones
 from interfazPrograma import *
 from cuadroAyuda import *
 
@@ -26,6 +27,9 @@ def comprobarTeclas(miControlador):
 
     if pygame.key.get_pressed()[pygame.K_h]:
         miControlador.funcStop()
+
+    if pygame.key.get_pressed()[pygame.K_n]:
+        notificaciones.controladorNoEncontrado()
 
 def main():
     pygame.init()

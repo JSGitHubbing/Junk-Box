@@ -1,8 +1,9 @@
 import os
 from pathlib import Path
 
+from MandoArduino.notificaciones import controladorNoEncontrado
 from controlador import *
-from lectorDeRutas import archivosEnRuta, rutaPadre, rutaDeArchivo, calcularIndiceArchivo
+from lectorDeRutas import archivosEnRuta, rutaPadre, calcularIndiceArchivo
 class ControladorLista(Controlador):
     indiceArchivo = 0
     mostrarAyuda = False
@@ -28,9 +29,13 @@ class ControladorLista(Controlador):
         self.recargarRuta()
 
     def avanzar(self):
-        self.ruta = rutaDeArchivo(self.ruta, self.listaArchivos[self.indiceArchivo])
-        self.recargarRuta()
-        self.indiceArchivo = 0
+        # si la ruta es un directorio lo abres, si no, mensajito
+        if self.listaArchivos[self.indiceArchivo].is_dir():
+            self.ruta = self.listaArchivos[self.indiceArchivo]
+            self.recargarRuta()
+            self.indiceArchivo = 0
+        else:
+            controladorNoEncontrado()
 
     def recargarRuta(self):
         self.listaArchivos = archivosEnRuta(self.ruta)
