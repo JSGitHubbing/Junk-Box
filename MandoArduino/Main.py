@@ -24,6 +24,9 @@ def comprobarTeclas(miControlador):
     if pygame.key.get_pressed()[pygame.K_s]:
         miControlador.flechaAbajo()
 
+    if pygame.key.get_pressed()[pygame.K_h]:
+        miControlador.funcStop()
+
 def main():
     pygame.init()
     pygame.font.init()

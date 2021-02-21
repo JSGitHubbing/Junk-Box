@@ -5,6 +5,8 @@ from controlador import *
 from lectorDeRutas import archivosEnRuta, rutaPadre, rutaDeArchivo, calcularIndiceArchivo
 class ControladorLista(Controlador):
     indiceArchivo = 0
+    mostrarAyuda = False
+
     def __init__(self, ruta):
         self.ruta = ruta if type(ruta) == Path else Path(ruta)
         self.listaArchivos = archivosEnRuta(ruta)
@@ -32,4 +34,7 @@ class ControladorLista(Controlador):
 
     def recargarRuta(self):
         self.listaArchivos = archivosEnRuta(self.ruta)
+
+    def funcStop(self):
+        self.mostrarAyuda = not self.mostrarAyuda
 

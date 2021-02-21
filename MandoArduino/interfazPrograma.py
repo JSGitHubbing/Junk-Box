@@ -8,7 +8,7 @@ class InterfazPrograma(ControladorLista):
     espacioCadaLinea = 35
 
     posListaX = 50
-    posListY = -7
+    posListY = 0
 
     margenY = 0
     primerIndiceEnPantalla = 0
@@ -20,8 +20,11 @@ class InterfazPrograma(ControladorLista):
         self.miCuadroAyuda = CuadroAyuda()
 
     def pintar(self, screen):
-        self.miCuadroAyuda.pintarNota(screen)
-        self.miCuadroAyuda.pintarAyuda(screen)
+        if self.mostrarAyuda:
+            self.miCuadroAyuda.pintarAyuda(screen)
+        else:
+            self.miCuadroAyuda.pintarNota(screen)
+
         self.actualizarDesplazamiento()
         self.pintarListaDeArchivos(screen)
 
