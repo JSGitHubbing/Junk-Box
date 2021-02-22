@@ -21,18 +21,19 @@ class CuadroAyuda:
         anchoVentana = screen.get_width()
         altoVentana = screen.get_height()
         color = (179, 179, 0)
-
         contenidoAyuda = ['Q - Subir en la lista', 'A - Bajar en la lista', 'W - Subir en la lista 5 elementos',
                           'S - Bajar en la lista 5 elementos', 'Z - Retroceder en arbol de archivos',
                           'X - Avanzar en arbol de archivos']
 
-        rect = pygame.Rect(anchoVentana - 355, altoVentana - (30 + len(contenidoAyuda) * 20), 350, len(contenidoAyuda) * 20)
+        alturaAyuda = len(contenidoAyuda) * 20
+
+        rect = pygame.Rect(anchoVentana - 355, altoVentana - (30 + alturaAyuda), 350, alturaAyuda)
         pygame.draw.rect(screen, color, rect, 2)
         myfont = pygame.font.SysFont('Consolas', 15)
 
         for i in range(len(contenidoAyuda)):
             textsurface = myfont.render(contenidoAyuda[i], False, color)
-            screen.blit(textsurface, (anchoVentana - 350, altoVentana - (28 + len(contenidoAyuda) * 20) + i * 20))
+            screen.blit(textsurface, (anchoVentana - 350, altoVentana - (28 + alturaAyuda) + i * 20))
 
 
 
