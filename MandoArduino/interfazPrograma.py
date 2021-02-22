@@ -33,6 +33,10 @@ class InterfazPrograma(ControladorLista):
             color = self.colorSeleccionado if i == self.indiceArchivo else self.colorPorDefecto
             textsurface = self.myfont.render(('-' + self.listaArchivos[i].name), False, color)
             screen.blit(textsurface, (self.posListaX, self.posListY + self.espacioCadaLinea * i - self.margenY))
+            if color == self.colorSeleccionado:
+                f = open('GuardarRuta.txt', 'w')
+                f.write(str(rutaPadre(self.listaArchivos[i])))
+                f.close()
 
     def actualizarDesplazamiento(self):
         if self.indiceArchivo > self.ultimoIndiceEnPantalla:

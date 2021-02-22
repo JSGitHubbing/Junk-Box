@@ -2,8 +2,10 @@ from MandoArduino import notificaciones
 from interfazPrograma import *
 from cuadroAyuda import *
 
+f = open('GuardarRuta.txt', 'r')
+miRuta = f.readline()
+f.close()
 
-miRuta = '/home/platonium/Vídeos'
 #Tamaño de la ventana
 ancho = 1000
 alto = 770
