@@ -1,4 +1,3 @@
-import re
 from pathlib import Path
 
 def esOculto(ruta):
