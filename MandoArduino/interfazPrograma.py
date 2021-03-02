@@ -3,7 +3,7 @@ from controladorLista import *
 import pygame
 class InterfazPrograma(ControladorLista):
     tamFuente = 30
-    colorSeleccionado =(255, 150, 150)
+    colorSeleccionado = (255, 150, 150)
     colorPorDefecto = (255, 0, 0)
     espacioCadaLinea = 35
 

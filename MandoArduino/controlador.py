@@ -43,3 +43,5 @@ class Controlador:
         self.botonNoImplementado('Func/Stop')
     def power(self):
         self.botonNoImplementado('Power')
+    def ejecutarComando(self, comando):
+        pass

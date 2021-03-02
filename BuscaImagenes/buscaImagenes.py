@@ -1,7 +1,9 @@
 from pathlib import Path
 from PIL import Image
-import shutil, os
+import shutil
+
 Image.MAX_IMAGE_PIXELS = 3299452380
+
 
 def archivosEnRuta(rutaDondeGuardar, rutaDondeMirar):
 
@@ -17,6 +19,8 @@ def archivosEnRuta(rutaDondeGuardar, rutaDondeMirar):
                 c = rutaDondeGuardar.joinpath("MisFotitos")
                 c.mkdir(0o777, False, True)
                 shutil.copy(elem, c)
+
+
 
 def clasificarFotos(ruta):
     rutaDondeGuardar = Path(ruta)

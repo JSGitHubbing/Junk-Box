@@ -1,6 +1,8 @@
-from MandoArduino import notificaciones
+from MandoArduino import notificaciones, interpreteSerial
 from interfazPrograma import *
 from cuadroAyuda import *
+import serial, json
+
 
 f = open('GuardarRuta.txt', 'r')
 miRuta = f.readline()
@@ -42,11 +44,14 @@ def main():
     pygame.display.set_caption('M A N D O')
 
     miControlador = InterfazPrograma(miRuta)
+    miInterprete = interpreteSerial.InterpreteSerial(puerto='/dev/ttyUSB0', frecuencia=9600)
 
     while 1:
         pygame.display.update()
         pygame.display.get_surface().fill((0, 0, 0))
 
+        comando = miInterprete.procesarSignal()
+        miControlador.ejecutarComando(comando)
         miControlador.pintar(screen)
 
         for event in pygame.event.get():

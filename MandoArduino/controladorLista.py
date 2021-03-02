@@ -43,3 +43,20 @@ class ControladorLista(Controlador):
     def funcStop(self):
         self.mostrarAyuda = not self.mostrarAyuda
 
+
+    def ejecutarComando(self, comando):
+
+        if comando == 68:
+            self.rebobinar()
+        elif comando == 67:
+            self.avanzar()
+        elif comando == 70:
+            self.subirVolumen()
+        elif comando == 21:
+            self.bajarVolumen()
+        elif comando == 9:
+            self.flechaArriba()
+        elif comando == 7:
+            self.flechaAbajo()
+        elif comando == 71:
+            self.funcStop()
