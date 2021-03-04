@@ -1,5 +1,6 @@
 class Controlador:
-    def botonNoImplementado(self, nombreBoton):
+    @staticmethod
+    def botonNoImplementado(nombreBoton):
         print('El botón ' + nombreBoton + ' no está implementado')
 
     def flechaArriba(self):

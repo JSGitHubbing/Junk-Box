@@ -18,7 +18,7 @@ class ControladorLista(Controlador):
 
         # TODO llamar a la función de carga de la configuración para asignarlo a una variable diccionario
 
-        self.configuracionMando = self.cargarConf()
+        # self.configuracionMando = self.cargarConf()
 
     def subirVolumen(self):
         self.indiceArchivo = 0 if self.indiceArchivo - 1 < 0 else self.indiceArchivo - 1
@@ -84,8 +84,8 @@ class ControladorLista(Controlador):
 
         # TODO comprobar el commando en el archivo de configuracion e imprimir por pantalla el nombre
 
-        print(self.configuracionMando['70'])
-        print(self.configuracionMando['21'])
+        # print(self.configuracionMando['70'])
+        # print(self.configuracionMando['21'])
 
         if comando == 68:
             self.rebobinar()
