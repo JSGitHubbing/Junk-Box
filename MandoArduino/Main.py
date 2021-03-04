@@ -1,14 +1,12 @@
-from MandoArduino import notificaciones, interpreteSerial
-from interfazPrograma import *
-from cuadroAyuda import *
-import serial, json
+from MandoArduino.Support import notificaciones, interpreteSerial
+from MandoArduino.Controladores.interfazPrograma import *
+from MandoArduino.UserInterface.cuadroAyuda import *
 
-
-f = open('GuardarRuta.txt', 'r')
+f = open('Data/GuardarRuta.txt', 'r')
 miRuta = f.readline()
 f.close()
 
-#Tamaño de la ventana
+# Tamaño de la ventana
 ancho = 1000
 alto = 770
 
@@ -35,6 +33,7 @@ def comprobarTeclas(miControlador):
     if pygame.key.get_pressed()[pygame.K_n]:
         notificaciones.controladorNoEncontrado()
 
+
 def main():
     pygame.init()
     pygame.font.init()
@@ -52,14 +51,16 @@ def main():
 
         comando = miInterprete.procesarSignal()
         miControlador.ejecutarComando(comando)
+
         miControlador.pintar(screen)
 
         for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                comprobarTeclas(miControlador)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 return
+            if event.type == pygame.KEYDOWN:
+                comprobarTeclas(miControlador)
+
 
 if __name__ == '__main__':
     main()

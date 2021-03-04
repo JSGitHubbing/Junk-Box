@@ -1,6 +1,8 @@
-from MandoArduino.cuadroAyuda import CuadroAyuda
-from controladorLista import *
+from MandoArduino.UserInterface.cuadroAyuda import CuadroAyuda
+from MandoArduino.Controladores.controladorLista import *
 import pygame
+
+
 class InterfazPrograma(ControladorLista):
     tamFuente = 30
     colorSeleccionado = (255, 150, 150)
@@ -34,7 +36,7 @@ class InterfazPrograma(ControladorLista):
             textsurface = self.myfont.render(('-' + self.listaArchivos[i].name), False, color)
             screen.blit(textsurface, (self.posListaX, self.posListY + self.espacioCadaLinea * i - self.margenY))
             if color == self.colorSeleccionado:
-                f = open('GuardarRuta.txt', 'w')
+                f = open('Data/GuardarRuta.txt', 'w')
                 f.write(str(rutaPadre(self.listaArchivos[i])))
                 f.close()
 
@@ -45,6 +47,6 @@ class InterfazPrograma(ControladorLista):
             self.recalcularDesplazamientoVertical(self.indiceArchivo - self.primerIndiceEnPantalla)
 
     def recalcularDesplazamientoVertical(self, incremento):
-            self.primerIndiceEnPantalla += incremento
-            self.ultimoIndiceEnPantalla += incremento
-            self.margenY = self.primerIndiceEnPantalla * self.espacioCadaLinea
+        self.primerIndiceEnPantalla += incremento
+        self.ultimoIndiceEnPantalla += incremento
+        self.margenY = self.primerIndiceEnPantalla * self.espacioCadaLinea

@@ -1,4 +1,8 @@
-import json, serial
+import json
+from json import JSONDecodeError
+
+import serial
+
 
 class InterpreteSerial:
     def __init__(self, puerto, frecuencia):
@@ -6,15 +10,15 @@ class InterpreteSerial:
 
     def procesarSignal(self):
         signal = self.leerSignal()
-        if signal == None:
+        if signal is None:
             return None
 
         try:
+            # TODO recordar quitar esto
             print(signal)
             # Convertir signal a JSON
-            dict = json.loads(signal)
-            return dict['command']
-        except:
+            return json.loads(signal)
+        except JSONDecodeError:
             pass
         return None
 
@@ -26,6 +30,3 @@ class InterpreteSerial:
         signalActual = signalActual.replace('b', '')
         signalActual = signalActual.replace('\'', '')
         return signalActual
-
-    def transformarSignalComando(self, datosSignal):
-        pass

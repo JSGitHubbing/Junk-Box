@@ -1,5 +1,6 @@
 from pathlib import Path
 
+
 def esOculto(ruta):
     return ruta.name.startswith('.')
 
@@ -8,7 +9,6 @@ def archivosEnRuta(ruta):
     if type(ruta) != Path:
         ruta = Path(ruta)
     listaElementos = ruta.iterdir()
-
 
     fileList = []
     allList = []
@@ -23,13 +23,11 @@ def archivosEnRuta(ruta):
 
     return allList
 
+
 def rutaPadre(ruta):
     return Path(ruta).parent
+
 
 def calcularIndiceArchivo(rutaArchivo):
     listaArchivos = archivosEnRuta(rutaPadre(rutaArchivo))
     return listaArchivos.index(rutaArchivo)
-
-
-
-

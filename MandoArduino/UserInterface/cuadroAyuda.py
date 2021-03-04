@@ -1,9 +1,9 @@
 import pygame
 
+
 class CuadroAyuda:
 
     def pintarNota(self, screen):
-
         anchoVentana = screen.get_width()
         altoVentana = screen.get_height()
 
@@ -12,12 +12,10 @@ class CuadroAyuda:
         pygame.draw.rect(screen, color, rect, 2)
         myfont = pygame.font.SysFont('Consolas', 15)
 
-        textsurface = myfont.render(('Presiona \"H\" para ayuda'), False, color)
-        screen.blit(textsurface, (anchoVentana - 220, altoVentana -50))
-
+        textsurface = myfont.render('Presiona \"H\" para ayuda', False, color)
+        screen.blit(textsurface, (anchoVentana - 220, altoVentana - 50))
 
     def pintarAyuda(self, screen):
-
         anchoVentana = screen.get_width()
         altoVentana = screen.get_height()
         color = (179, 179, 0)
@@ -34,10 +32,3 @@ class CuadroAyuda:
         for i in range(len(contenidoAyuda)):
             textsurface = myfont.render(contenidoAyuda[i], False, color)
             screen.blit(textsurface, (anchoVentana - 350, altoVentana - (28 + alturaAyuda) + i * 20))
-
-
-
-
-
-
-
