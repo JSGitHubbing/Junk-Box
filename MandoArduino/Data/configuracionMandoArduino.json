@@ -6,5 +6,16 @@
   "70" : "subirVolumen",
   "21" : "bajarVomumen",
   "71" : "funcStop",
-  "69" : "power"
+  "69" : "power",
+  "25" : "EQ",
+  "22" : "Boton-0",
+  "12" : "Boton_1",
+  "24" : "Boton_2",
+  "94" : "Boton_3",
+  "8" : "Boton_4",
+  "28" : "Boton_5",
+  "90" : "Boton_6",
+  "66" : "Boton_7",
+  "82" : "Boton_8",
+  "74" : "Boton_9"
 }
