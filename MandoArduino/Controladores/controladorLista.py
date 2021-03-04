@@ -84,7 +84,7 @@ class ControladorLista(Controlador):
 
         # TODO comprobar el commando en el archivo de configuracion e imprimir por pantalla el nombre
 
-#        print("En configuracion leemos: comando: " + str(comando) + " valor: " + self.configuracionMando[str(comando)])
+        print("En configuracion leemos: comando: " + str(comando) + " valor: " + self.configuracionMando[str(comando)])
 
         if comando == 68:
             self.rebobinar()

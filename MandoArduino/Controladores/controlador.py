@@ -66,6 +66,9 @@ class Controlador:
     def power(self):
         self.botonNoImplementado('Power')
 
+    def stRept(self):
+        self.botonNoImplementado('St/Rept')
+
     def ejecutarComando(self, comando):
         pass
 
