@@ -6,9 +6,12 @@ def sendmessage(message):
     return
 
 
-def controladorNoEncontrado():
+def mensajeControladorNoEncontrado():
     sendmessage('Controlador NO encontrado')
 
 
 def mensajeRutaTope():
     sendmessage("Has llegado a la ruta \"\\\" (root) no puedes volver atrás")
+
+def mensajeMandoNoConfigurado():
+    sendmessage("La configuración de ese mando no te permite realizar esa acción")

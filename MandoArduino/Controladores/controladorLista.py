@@ -3,7 +3,6 @@ from datetime import datetime
 import pygame
 from MandoArduino.Controladores.controlador import *
 from MandoArduino.Support.lectorDeRutas import *
-from MandoArduino.Support.notificaciones import *
 
 
 class ControladorLista(Controlador):
@@ -13,11 +12,9 @@ class ControladorLista(Controlador):
     lapsoParaRepetir = 0.5
 
     def __init__(self, ruta):
+        Controlador.__init__(self)
         self.ruta = ruta if type(ruta) == Path else Path(ruta)
         self.listaArchivos = archivosEnRuta(ruta)
-
-        # TODO llamar a la función de carga de la configuración para asignarlo a una variable diccionario
-
         self.configuracionMando = self.cargarConf()
 
     def subirVolumen(self):
@@ -36,7 +33,7 @@ class ControladorLista(Controlador):
 
     def rebobinar(self):
         if self.ruta == self.ruta.parent:
-            mensajeRutaTope()
+            return "ERROR_RUTA_TOPE"
         else:
             self.indiceArchivo = calcularIndiceArchivo(self.ruta)
             self.ruta = rutaPadre(self.ruta)
@@ -49,7 +46,7 @@ class ControladorLista(Controlador):
             self.recargarRuta()
             self.indiceArchivo = 0
         else:
-            controladorNoEncontrado()
+            return "ERROR_CONTROLADOR_NO_ENCONTRADO"
 
     def recargarRuta(self):
         self.listaArchivos = archivosEnRuta(self.ruta)
@@ -66,7 +63,16 @@ class ControladorLista(Controlador):
             return
 
         if self.debeEjecutarComando(signal):
-            self.llamarFuncionComando(signal['command'])
+            try:
+                address = str(signal['address'])
+                configuracionMandoConcreto = self.configuracionMando[address]
+
+                comandoMando = str(signal['command'])
+                instruccion = configuracionMandoConcreto[comandoMando]
+                return self.ejecutarComandoMedianteInstruccion(instruccion)
+
+            except KeyError:
+                return "MANDO_NO_CONFIGURADO"
 
     def debeEjecutarComando(self, signal):
         repeticion = signal['raw-data'] == 0
@@ -79,29 +85,6 @@ class ControladorLista(Controlador):
             self.tiempoUltimaEjecucion = datetime.now()
 
         return True
-
-    def llamarFuncionComando(self, comando):
-
-        # TODO comprobar el commando en el archivo de configuracion e imprimir por pantalla el nombre
-
-        print("En configuracion leemos: comando: " + str(comando) + " valor: " + self.configuracionMando[str(comando)])
-
-        if comando == 68:
-            self.rebobinar()
-        elif comando == 67:
-            self.avanzar()
-        elif comando == 70:
-            self.subirVolumen()
-        elif comando == 21:
-            self.bajarVolumen()
-        elif comando == 9:
-            self.flechaArriba()
-        elif comando == 7:
-            self.flechaAbajo()
-        elif comando == 71:
-            self.funcStop()
-        elif comando == 69:
-            self.power()
 
     @staticmethod
     def cargarConf():

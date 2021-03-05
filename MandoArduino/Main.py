@@ -1,5 +1,6 @@
 from MandoArduino.Support import notificaciones, interpreteSerial
 from MandoArduino.Controladores.interfazPrograma import *
+from MandoArduino.Support.notificaciones import *
 from MandoArduino.UserInterface.cuadroAyuda import *
 
 f = open('Data/GuardarRuta.txt', 'r')
@@ -9,30 +10,6 @@ f.close()
 # Tamaño de la ventana
 ancho = 1000
 alto = 770
-
-
-def comprobarTeclas(miControlador):
-    if pygame.key.get_pressed()[pygame.K_z]:
-        miControlador.rebobinar()
-    if pygame.key.get_pressed()[pygame.K_x]:
-        miControlador.avanzar()
-
-    if pygame.key.get_pressed()[pygame.K_q]:
-        miControlador.subirVolumen()
-    if pygame.key.get_pressed()[pygame.K_a]:
-        miControlador.bajarVolumen()
-
-    if pygame.key.get_pressed()[pygame.K_w]:
-        miControlador.flechaArriba()
-    if pygame.key.get_pressed()[pygame.K_s]:
-        miControlador.flechaAbajo()
-
-    if pygame.key.get_pressed()[pygame.K_h]:
-        miControlador.funcStop()
-
-    if pygame.key.get_pressed()[pygame.K_n]:
-        notificaciones.controladorNoEncontrado()
-
 
 def main():
     pygame.init()
@@ -50,7 +27,18 @@ def main():
         pygame.display.get_surface().fill((0, 0, 0))
 
         comando = miInterprete.procesarSignal()
-        miControlador.ejecutarComando(comando)
+        error = miControlador.ejecutarComando(comando) # Puede devolver None
+
+        # TODO quiero ejecutar la siguiente línea para que muestre errores por notificaciones del sistema
+        # gestorErrores.notificar(error)
+
+        if error:
+            if error == "MANDO_NO_CONFIGURADO":
+                mensajeMandoNoConfigurado()
+            elif error == "ERROR_CONTROLADOR_NO_ENCONTRADO":
+                mensajeControladorNoEncontrado()
+            elif error == "ERROR_RUTA_TOPE":
+                mensajeRutaTope()
 
         miControlador.pintar(screen)
 
@@ -58,8 +46,6 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 return
-            if event.type == pygame.KEYDOWN:
-                comprobarTeclas(miControlador)
 
 
 if __name__ == '__main__':
