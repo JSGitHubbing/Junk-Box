@@ -1,6 +1,6 @@
-from MandoArduino.Support import notificaciones, interpreteSerial
+from MandoArduino.Support import interpreteSerial
 from MandoArduino.Controladores.interfazPrograma import *
-from MandoArduino.Support.notificaciones import *
+from MandoArduino.Support.gestorErrores import GestorErrores
 from MandoArduino.UserInterface.cuadroAyuda import *
 
 f = open('Data/GuardarRuta.txt', 'r')
@@ -10,6 +10,7 @@ f.close()
 # Tamaño de la ventana
 ancho = 1000
 alto = 770
+
 
 def main():
     pygame.init()
@@ -27,18 +28,10 @@ def main():
         pygame.display.get_surface().fill((0, 0, 0))
 
         comando = miInterprete.procesarSignal()
-        error = miControlador.ejecutarComando(comando) # Puede devolver None
-
+        error = miControlador.ejecutarComando(comando)  # Puede devolver None
+        gestorErrores = GestorErrores()
         # TODO quiero ejecutar la siguiente línea para que muestre errores por notificaciones del sistema
-        # gestorErrores.notificar(error)
-
-        if error:
-            if error == "MANDO_NO_CONFIGURADO":
-                mensajeMandoNoConfigurado()
-            elif error == "ERROR_CONTROLADOR_NO_ENCONTRADO":
-                mensajeControladorNoEncontrado()
-            elif error == "ERROR_RUTA_TOPE":
-                mensajeRutaTope()
+        gestorErrores.notificar(error)
 
         miControlador.pintar(screen)
 
