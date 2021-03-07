@@ -2,7 +2,12 @@ from MandoArduino.Support import interpreteSerial
 from MandoArduino.Controladores.interfazPrograma import *
 from MandoArduino.Support.gestorErrores import GestorErrores
 from MandoArduino.UserInterface.cuadroAyuda import *
+import os
 
+if not os.path.exists('Data/GuardarRuta.txt'):
+    f = open('Data/GuardarRuta.txt', 'w')
+    f.write('/')
+    f.close()
 f = open('Data/GuardarRuta.txt', 'r')
 miRuta = f.readline()
 f.close()
