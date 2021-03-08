@@ -11,9 +11,7 @@ CUENTAPALABRAS:
               Nos permite elegir el nombre del archivo de salida así como su formato simplemente escribiendo su nombre y extensión.
               
 GRAFICA:
-        En conjunto con Cuentapalabras, este programa dibuja una gráfica de barras con los resultados anteriores, permitiéndonos elegir la cantidad de
-        elementos representados.
+        En conjunto con Cuentapalabras, este programa dibuja una gráfica de barras con los resultados anteriores, permitiéndonos elegir la cantidad de elementos representados.
         
 MANDOARDUINO:
-            Software para conectar un mando a distancia de una placa Arduino. A través del mando podemos movernos por los directorios de nuestro PC
-            para elegir el archivo que queramos abrir.
+            Software para conectar un mando a distancia de una placa Arduino. A través del mando podemos movernos por los directorios de nuestro PC para elegir el archivo que queramos abrir.
