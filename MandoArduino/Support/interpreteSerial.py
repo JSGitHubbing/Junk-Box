@@ -8,7 +8,7 @@ from MandoArduino.Support.notificaciones import mensajeSerialNoConectado, mensaj
 
 class InterpreteSerial:
     def __init__(self, puerto, frecuencia):
-        intentosMaximos = 3
+        intentosMaximos = 10
         intentos = 0
         while intentos < intentosMaximos:
             try:
