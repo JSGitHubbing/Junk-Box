@@ -1,0 +1,32 @@
+{
+  "0": {
+    "9": "flechaArriba",
+    "7": "flechaAbajo",
+    "68": "rebobinar",
+    "67": "avanzar",
+    "70": "subirVolumen",
+    "21": "bajarVolumen",
+    "71": "funcStop",
+    "69": "power",
+    "25": "EQ",
+    "22": "Boton_0",
+    "12": "Boton_1",
+    "24": "Boton_2",
+    "94": "Boton_3",
+    "8": "Boton_4",
+    "28": "Boton_5",
+    "90": "Boton_6",
+    "66": "Boton_7",
+    "82": "Boton_8",
+    "74": "Boton_9",
+    "13": "ST/REPT"
+  },
+  "4" : {
+    "64" : "subirVolumen",
+    "65" : "bajarVolumen",
+    "68" : "avanzar",
+    "40" : "rebobinar",
+    "8" : "power",
+    "170" : "funcStop"
+  }
+}
