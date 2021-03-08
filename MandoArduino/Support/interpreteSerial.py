@@ -1,12 +1,27 @@
 import json
 from json import JSONDecodeError
 
-import serial
+from serial import *
+
+from MandoArduino.Support.notificaciones import mensajeSerialNoConectado, mensajeNoArduino
 
 
 class InterpreteSerial:
     def __init__(self, puerto, frecuencia):
-        self.arduino = serial.Serial(port=puerto, baudrate=frecuencia, timeout=.1)
+        intentosMaximos = 3
+        intentos = 0
+        while intentos < intentosMaximos:
+            try:
+                self.arduino = Serial(port=puerto, baudrate=frecuencia, timeout=.1)
+                break
+            except SerialException:
+                intentos += 1
+                mensajeSerialNoConectado()
+                time.sleep(5)
+
+            if intentos >= intentosMaximos:
+                mensajeNoArduino()
+                exit()
 
     def procesarSignal(self):
         signal = self.leerSignal()

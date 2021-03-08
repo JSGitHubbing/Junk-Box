@@ -13,5 +13,14 @@ def mensajeControladorNoEncontrado():
 def mensajeRutaTope():
     sendmessage("Has llegado a la ruta \"\\\" (root) no puedes volver atrás")
 
+
 def mensajeMandoNoConfigurado():
     sendmessage("La configuración de ese mando no te permite realizar esa acción")
+
+
+def mensajeSerialNoConectado():
+    sendmessage("Conecta el serial de Arduino. Reintentando en 5 segundos")
+
+
+def mensajeNoArduino():
+    sendmessage("No se ha podido establecer la conexion tras los intentos")
