@@ -1,6 +1,14 @@
+import json
+from datetime import datetime
+
 class Controlador:
 
-    def __init__(self):
+    tiempoUltimaEjecucion = datetime.now()
+    lapsoParaRepetir = 0.5
+
+    def __init__(self, gestor):
+        self.miGestor = gestor
+        self.configuracionMando = self.cargarConf()
         self.comandos = {
              'flechaArriba': lambda: self.flechaArriba(),
              'flechaAbajo': lambda: self.flechaAbajo(),
@@ -23,6 +31,7 @@ class Controlador:
              'Boton_9': lambda: self.boton9(),
              'REPT': lambda: self.stRept()
         }
+
 
     @staticmethod
     def botonNoImplementado(nombreBoton):
@@ -94,9 +103,41 @@ class Controlador:
     def stRept(self):
         self.botonNoImplementado('St/Rept')
 
-    def ejecutarComando(self, comando):
-        pass
+    def ejecutarComando(self, signal):
+        if signal is None:
+            return
+
+        if self.debeEjecutarComando(signal):
+            try:
+                address = str(signal['address'])
+                configuracionMandoConcreto = self.configuracionMando[address]
+
+                comandoMando = str(signal['command'])
+                instruccion = configuracionMandoConcreto[comandoMando]
+                return self.ejecutarComandoMedianteInstruccion(instruccion)
+
+            except KeyError:
+                return "MANDO_NO_CONFIGURADO"
+
+    def debeEjecutarComando(self, signal):
+        repeticion = signal['raw-data'] == 0
+        if repeticion:
+            now = datetime.now()
+            diferencia = (now - self.tiempoUltimaEjecucion)
+            if diferencia.total_seconds() <= self.lapsoParaRepetir:
+                return False
+        else:
+            self.tiempoUltimaEjecucion = datetime.now()
+
+        return True
 
     def ejecutarComandoMedianteInstruccion(self, instruccion):
         return self.comandos[instruccion]()
+
+    # TODO cambiarlo a una clase externa
+    @staticmethod
+    def cargarConf():
+        archivoConfiguracion = open('Data/configuracionMandoArduino.json', 'r')
+        datosFichero = archivoConfiguracion.read()
+        return json.loads(datosFichero)
 

@@ -16,12 +16,13 @@ class InterfazPrograma(ControladorLista):
     primerIndiceEnPantalla = 0
     ultimoIndiceEnPantalla = 21
 
-    def __init__(self, ruta):
-        ControladorLista.__init__(self, ruta)
+    def __init__(self, ruta, gestor):
+        ControladorLista.__init__(self, ruta, gestor)
         self.myfont = pygame.font.SysFont('Consolas', self.tamFuente)
         self.miCuadroAyuda = CuadroAyuda()
 
     def pintar(self, screen):
+        pygame.display.get_surface().fill((0, 0, 0))
         if self.mostrarAyuda:
             self.miCuadroAyuda.pintarAyuda(screen)
         else:

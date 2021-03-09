@@ -1,7 +1,4 @@
-from MandoArduino.Support import interpreteSerial
-from MandoArduino.Controladores.interfazPrograma import *
-from MandoArduino.Support.gestorErrores import GestorErrores
-from MandoArduino.Support.gestorRutaInicio import gestorRutaInicio
+from MandoArduino.Controladores.gestorControladores import GestorControladores
 from MandoArduino.UserInterface.cuadroAyuda import *
 
 # Tamaño de la ventana
@@ -16,10 +13,8 @@ def main():
     size = ancho, alto
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption('M A N D O')
-    miRuta = gestorRutaInicio()
-    gestorErrores = GestorErrores()
-    miControlador = InterfazPrograma(miRuta)
-    miInterprete = interpreteSerial.InterpreteSerial(puerto='/dev/ttyUSB0', frecuencia=9600)
+    elGestor = GestorControladores()
+
 
     while 1:
 
@@ -29,14 +24,11 @@ def main():
                 return
 
         pygame.display.update()
-        pygame.display.get_surface().fill((0, 0, 0))
 
-        comando = miInterprete.procesarSignal()
-        error = miControlador.ejecutarComando(comando)  # Puede devolver None
-        # TODO quiero ejecutar la siguiente línea para que muestre errores por notificaciones del sistema
-        gestorErrores.notificar(error)
+        elGestor.ejecutar(screen)
 
-        miControlador.pintar(screen)
+
+
 
 
 if __name__ == '__main__':

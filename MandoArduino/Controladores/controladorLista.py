@@ -8,14 +8,11 @@ from MandoArduino.Support.lectorDeRutas import *
 class ControladorLista(Controlador):
     indiceArchivo = 0
     mostrarAyuda = False
-    tiempoUltimaEjecucion = datetime.now()
-    lapsoParaRepetir = 0.5
 
-    def __init__(self, ruta):
-        Controlador.__init__(self)
+    def __init__(self, ruta, gestor):
+        Controlador.__init__(self, gestor)
         self.ruta = ruta if type(ruta) == Path else Path(ruta)
         self.listaArchivos = archivosEnRuta(ruta)
-        self.configuracionMando = self.cargarConf()
 
     def subirVolumen(self):
         self.indiceArchivo = 0 if self.indiceArchivo - 1 < 0 else self.indiceArchivo - 1
@@ -46,7 +43,7 @@ class ControladorLista(Controlador):
             self.recargarRuta()
             self.indiceArchivo = 0
         else:
-            return "ERROR_CONTROLADOR_NO_ENCONTRADO"
+            self.miGestor.cargarControlador('VLC')
 
     def recargarRuta(self):
         self.listaArchivos = archivosEnRuta(self.ruta)
@@ -58,36 +55,3 @@ class ControladorLista(Controlador):
         miEventoCierre = pygame.event.Event(pygame.QUIT)
         pygame.event.post(miEventoCierre)
 
-    def ejecutarComando(self, signal):
-        if signal is None:
-            return
-
-        if self.debeEjecutarComando(signal):
-            try:
-                address = str(signal['address'])
-                configuracionMandoConcreto = self.configuracionMando[address]
-
-                comandoMando = str(signal['command'])
-                instruccion = configuracionMandoConcreto[comandoMando]
-                return self.ejecutarComandoMedianteInstruccion(instruccion)
-
-            except KeyError:
-                return "MANDO_NO_CONFIGURADO"
-
-    def debeEjecutarComando(self, signal):
-        repeticion = signal['raw-data'] == 0
-        if repeticion:
-            now = datetime.now()
-            diferencia = (now - self.tiempoUltimaEjecucion)
-            if diferencia.total_seconds() <= self.lapsoParaRepetir:
-                return False
-        else:
-            self.tiempoUltimaEjecucion = datetime.now()
-
-        return True
-
-    @staticmethod
-    def cargarConf():
-        archivoConfiguracion = open('Data/configuracionMandoArduino.json', 'r')
-        datosFichero = archivoConfiguracion.read()
-        return json.loads(datosFichero)
