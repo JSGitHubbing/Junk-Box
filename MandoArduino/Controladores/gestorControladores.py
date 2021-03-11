@@ -1,5 +1,4 @@
 from time import sleep
-
 from MandoArduino.Controladores.controladorVLC import ControladorVLC
 from MandoArduino.Controladores.interfazPrograma import InterfazPrograma
 from MandoArduino.Support import interpreteSerial
@@ -27,12 +26,10 @@ class GestorControladores:
         if type(self.controladorActivo) == InterfazPrograma:
             self.controladorActivo.pintar(screen)
 
-    def cargarControlador(self,etiquetaControlador):
+    def cargarControlador(self, etiquetaControlador):
         self.controladorActivo = self.diccionarioControladores[etiquetaControlador]
         sleep(1)
         self.miInterprete.arduino.flushInput()
 
-
     def cargarControladorInterfaz(self):
         self.cargarControlador('Interfaz')
-

@@ -1,8 +1,8 @@
 import json
 from datetime import datetime
 
-class Controlador:
 
+class Controlador:
     tiempoUltimaEjecucion = datetime.now()
     lapsoParaRepetir = 0.5
 
@@ -10,28 +10,27 @@ class Controlador:
         self.miGestor = gestor
         self.configuracionMando = self.cargarConf()
         self.comandos = {
-             'flechaArriba': lambda: self.flechaArriba(),
-             'flechaAbajo': lambda: self.flechaAbajo(),
-             'rebobinar': lambda: self.rebobinar(),
-             'avanzar': lambda: self.avanzar(),
-             'subirVolumen': lambda: self.subirVolumen(),
-             'bajarVolumen': lambda: self.bajarVolumen(),
-             'funcStop': lambda: self.funcStop(),
-             'power': lambda: self.power(),
-             'EQ': lambda: self.botonEQ(),
-             'Boton_0': lambda: self.boton0(),
-             'Boton_1': lambda: self.boton1(),
-             'Boton_2': lambda: self.boton2(),
-             'Boton_3': lambda: self.boton3(),
-             'Boton_4': lambda: self.boton4(),
-             'Boton_5': lambda: self.boton5(),
-             'Boton_6': lambda: self.boton6(),
-             'Boton_7': lambda: self.boton7(),
-             'Boton_8': lambda: self.boton8(),
-             'Boton_9': lambda: self.boton9(),
-             'REPT': lambda: self.stRept()
+            'flechaArriba': lambda: self.flechaArriba(),
+            'flechaAbajo': lambda: self.flechaAbajo(),
+            'rebobinar': lambda: self.rebobinar(),
+            'avanzar': lambda: self.avanzar(),
+            'subirVolumen': lambda: self.subirVolumen(),
+            'bajarVolumen': lambda: self.bajarVolumen(),
+            'funcStop': lambda: self.funcStop(),
+            'power': lambda: self.power(),
+            'EQ': lambda: self.botonEQ(),
+            'Boton_0': lambda: self.boton0(),
+            'Boton_1': lambda: self.boton1(),
+            'Boton_2': lambda: self.boton2(),
+            'Boton_3': lambda: self.boton3(),
+            'Boton_4': lambda: self.boton4(),
+            'Boton_5': lambda: self.boton5(),
+            'Boton_6': lambda: self.boton6(),
+            'Boton_7': lambda: self.boton7(),
+            'Boton_8': lambda: self.boton8(),
+            'Boton_9': lambda: self.boton9(),
+            'REPT': lambda: self.stRept()
         }
-
 
     @staticmethod
     def botonNoImplementado(nombreBoton):
@@ -140,4 +139,3 @@ class Controlador:
         archivoConfiguracion = open('Data/configuracionMandoArduino.json', 'r')
         datosFichero = archivoConfiguracion.read()
         return json.loads(datosFichero)
-

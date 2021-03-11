@@ -15,7 +15,6 @@ def main():
     pygame.display.set_caption('M A N D O')
     elGestor = GestorControladores()
 
-
     while 1:
 
         for event in pygame.event.get():
@@ -26,9 +25,6 @@ def main():
         pygame.display.update()
 
         elGestor.ejecutar(screen)
-
-
-
 
 
 if __name__ == '__main__':

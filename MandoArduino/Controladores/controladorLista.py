@@ -1,5 +1,4 @@
-import json
-from datetime import datetime
+
 import pygame
 from MandoArduino.Controladores.controlador import *
 from MandoArduino.Support.lectorDeRutas import *
@@ -54,4 +53,3 @@ class ControladorLista(Controlador):
     def power(self):
         miEventoCierre = pygame.event.Event(pygame.QUIT)
         pygame.event.post(miEventoCierre)
-

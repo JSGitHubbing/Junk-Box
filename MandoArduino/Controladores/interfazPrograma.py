@@ -22,7 +22,7 @@ class InterfazPrograma(ControladorLista):
         self.miCuadroAyuda = CuadroAyuda()
 
     def pintar(self, screen):
-        pygame.display.get_surface().fill((0, 0, 0))
+        pygame.display.get_surface().fill((0, 10, 0))
         if self.mostrarAyuda:
             self.miCuadroAyuda.pintarAyuda(screen)
         else:
