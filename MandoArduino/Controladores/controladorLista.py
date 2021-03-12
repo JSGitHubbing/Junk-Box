@@ -1,3 +1,4 @@
+import subprocess
 
 import pygame
 from MandoArduino.Controladores.controlador import *
@@ -7,11 +8,13 @@ from MandoArduino.Support.lectorDeRutas import *
 class ControladorLista(Controlador):
     indiceArchivo = 0
     mostrarAyuda = False
+    rutaConfiguracionFormato = 'Data/formatosControlador.json'
 
     def __init__(self, ruta, gestor):
         Controlador.__init__(self, gestor)
         self.ruta = ruta if type(ruta) == Path else Path(ruta)
         self.listaArchivos = archivosEnRuta(ruta)
+        self.configuracionFormato = cargarConfiguracionJson(self.rutaConfiguracionFormato)
 
     def subirVolumen(self):
         self.indiceArchivo = 0 if self.indiceArchivo - 1 < 0 else self.indiceArchivo - 1
@@ -37,12 +40,19 @@ class ControladorLista(Controlador):
 
     def avanzar(self):
         # si la ruta es un directorio lo abres, si no, mensajito
-        if self.listaArchivos[self.indiceArchivo].is_dir():
-            self.ruta = self.listaArchivos[self.indiceArchivo]
+        archivoActual = self.listaArchivos[self.indiceArchivo]
+        if archivoActual.is_dir():
+            self.ruta = archivoActual
             self.recargarRuta()
             self.indiceArchivo = 0
         else:
-            self.miGestor.cargarControlador('VLC')
+            formatoArchivo = archivoActual.suffix
+            try:
+                etiquetaControlador = self.configuracionFormato[formatoArchivo]
+                subprocess.Popen([etiquetaControlador.lower(), str(archivoActual)])
+                self.miGestor.cargarControlador(etiquetaControlador)
+            except:
+                return 'EXTENSION_NO_VALIDA'
 
     def recargarRuta(self):
         self.listaArchivos = archivosEnRuta(self.ruta)

@@ -12,3 +12,5 @@ class GestorErrores:
                 notificaciones.mensajeControladorNoEncontrado()
             elif error == "ERROR_RUTA_TOPE":
                 notificaciones.mensajeRutaTope()
+            elif error == 'EXTENSION_NO_VALIDA':
+                notificaciones.mensajeNoExtension()

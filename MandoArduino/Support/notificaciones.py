@@ -24,3 +24,7 @@ def mensajeSerialNoConectado():
 
 def mensajeNoArduino():
     sendmessage("No se ha podido establecer la conexion tras los intentos")
+
+
+def mensajeNoExtension():
+    sendmessage("No se pueden abrir archivos con esta extensión.")

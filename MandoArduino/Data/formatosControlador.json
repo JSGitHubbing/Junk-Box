@@ -1,0 +1,9 @@
+
+{
+  ".mkv": "vlc-wrapper",
+  ".mp4": "vlc-wrapper",
+  ".webm": "vlc-wrapper",
+  ".ogg": "vlc-wrapper",
+  ".3gp": "vlc-wrapper",
+  ".avi": "wmpr"
+}

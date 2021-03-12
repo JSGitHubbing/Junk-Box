@@ -14,8 +14,9 @@ class GestorControladores:
 
         self.diccionarioControladores = {
             'Interfaz': InterfazPrograma(miRuta, self),
-            'VLC': ControladorVLC(self)
+            'vlc-wrapper': ControladorVLC(self)
         }
+        self.controladorActivo = None
         self.cargarControladorInterfaz()
 
     def ejecutar(self, screen):

@@ -1,12 +1,16 @@
-from MandoArduino.Controladores.gestorControladores import GestorControladores
-from MandoArduino.UserInterface.cuadroAyuda import *
+import subprocess
 
-# Tamaño de la ventana
+import pygame as pygame
+
+from MandoArduino.Controladores.gestorControladores import GestorControladores
+
+# Tamano de la ventana
 ancho = 1000
 alto = 770
 
 
 def main():
+    subprocess.Popen(['xhost', '+SI:localuser:root'])
     pygame.init()
     pygame.font.init()
 

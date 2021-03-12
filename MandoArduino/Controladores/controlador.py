@@ -1,14 +1,15 @@
-import json
 from datetime import datetime
+from MandoArduino.Support.lectorConfiguracion import cargarConfiguracionJson
 
 
 class Controlador:
     tiempoUltimaEjecucion = datetime.now()
     lapsoParaRepetir = 0.5
+    rutaConfiguracionMandoArduino = 'Data/configuracionMandoArduino.json'
 
     def __init__(self, gestor):
         self.miGestor = gestor
-        self.configuracionMando = self.cargarConf()
+        self.configuracionMando = cargarConfiguracionJson(self.rutaConfiguracionMandoArduino)
         self.comandos = {
             'flechaArriba': lambda: self.flechaArriba(),
             'flechaAbajo': lambda: self.flechaAbajo(),
@@ -132,10 +133,3 @@ class Controlador:
 
     def ejecutarComandoMedianteInstruccion(self, instruccion):
         return self.comandos[instruccion]()
-
-    # TODO cambiarlo a una clase externa
-    @staticmethod
-    def cargarConf():
-        archivoConfiguracion = open('Data/configuracionMandoArduino.json', 'r')
-        datosFichero = archivoConfiguracion.read()
-        return json.loads(datosFichero)
